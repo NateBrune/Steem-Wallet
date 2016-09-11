@@ -3,26 +3,75 @@
         <!-- load stylesheets: Bootstrap v2.3.0 - http://twitter.github.com/bootstrap/index.html -->
         <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css"></link>
 
+        <!-- load stylesheets: Font Awesome -->
+        <link rel="stylesheet" type="text/css" href="../font-awesome-4.6.3/css/font-awesome.min.css">
+
         <!-- load javascript: jQuery 1.9.1 - http://jquery.com/ -->
         <script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
 
         <!-- load javascript: Bootstrap v2.3.0 - http://twitter.github.com/bootstrap/ -->
         <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 
+        <!-- load javascript: steemjs-lib.js -->
+        <script type="text/javascript" src="../js/steemjs-lib.min.js"></script>
+
+        <!-- load javascript: login.js -->
+        <script type="text/javascript" src="../js/login.js"></script>
+
         <!-- load stylesheets: internal -->
         <link rel="stylesheet" type="text/css" href="../css/global.css"></link>
         <link rel="stylesheet" type="text/css" href="../css/main.css"></link>
-    </head>
-    <body>
-        <div id="main-outer">
-            <div id="main-inner">
-                <div id="main-title">Chrome Extension Template v1.0</div>
-                <img id="main-image" src="../images/tsheets_logo.png" />
-                <div id="main-about-text">A sample project for kickstarting your next Chrome browser extension.</div>
-            </div>
-        </div>
+        <link rel="stylesheet" type="text/css" href="../css/login.css"></link>
+        <link rel="stylesheet" type="text/css" href="../css/keyPage.css"></link>
 
-        <!-- load javascript: unique html page javascript file -->
-        <script type="text/javascript" src="../js/main.js"></script>
+    </head>
+    <body style="width: 300px">
+    <div id="loginPage" style="display: block;">
+    <div class="text-center" style="padding:50px 0">
+      <div class="logo">login</div>
+      <!-- Login Form -->
+      <div class="login-form-1">
+        <form id="login-form" class="text-left">
+          <div class="login-form-main-message"></div>
+          <div class="main-login-form">
+            <div class="login-group">
+              <div class="form-group">
+                <input type="text" class="form-control" id="username" name="username" placeholder="username">
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control" id="password" name="password" placeholder="password">
+              </div>
+            </div>
+            <button type="button" id="loginButton" class="login-button"><i class="fa fa-chevron-right"></i></button>
+          </div>
+          <div class="etc-login-form">
+            <center><p><a href="https://steem.io">What is steem?</a></p></center>
+          </div>
+        </form>
+      </div>
+    </div>
+    </div>
+    <!-- end:Login Form -->
+    <!-- Main Wallet -->
+    <div id="keysPage" style="display: none;">
+    <div class="text-center" style="">
+      <div class="db-pricing-seven" style="word-wrap: break-word;">
+          <ul>
+              <li class="price" name="icon">
+                  <i class="fa fa-lock"></i>
+                  Steem Keys
+              </li>
+
+              <li id="postingPub">Posting<br />WIF</li>
+              <li id="activePub">Active<br />WIF</li>
+              <li id="ownerPub">Owner<br />WIF</li>
+          </ul>
+          <div class="pricing-footer">
+              <button id="private" class="login-button">show private</button>
+          </div>
+      </div>
+    </div>
+    </div>
+    <!-- end:Main Wallet -->
     </body>
 </html>
