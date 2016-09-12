@@ -70,15 +70,22 @@ const options = {
 
 var account = null;
 var user = new window.steemJS.Login();
-user.setRoles(["master"]);
+user.setRoles([]);
 
 function showpriv(){
-
+  console.log(user['keyCache']);
+  $("#postingPub").html("Posting<br />".concat(user['keyCache']['_myKeys'].get("posting")['priv'].toWif()));
+  $("#activePub").html("Active<br />".concat(user['keyCache']['_myKeys'].get("active")['priv'].toWif()));
+  $("#ownerPub").html("Owner<br />".concat(user['keyCache']['_myKeys'].get("owner")['priv'].toWif()));
+  $("#private").html("Show Public");
+  private=true;
 }
 function showpub(){
   $("#postingPub").html("Posting<br />".concat(user['keyCache']['_keyCachePub'].get("posting")));
   $("#activePub").html("Active<br />".concat(user['keyCache']['_keyCachePub'].get("active")));
   $("#ownerPub").html("Owner<br />".concat(user['keyCache']['_keyCachePub'].get("owner")));
+  $("#private").html("Show Private");
+  private=false;
 }
 
 // login
@@ -146,6 +153,6 @@ function login()
 }
 $(document).ready(function () {
   $("#loginButton").click(function(){login();});
-  $("#loginButton").click(function(){showpriv();});
+  $("#private").click(function(){if(private){showpub();}else{showpriv();}});
   $("#loginButton").click(function(){showpub();});
 });
