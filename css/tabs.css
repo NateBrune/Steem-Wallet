@@ -1,0 +1,37 @@
+body { font-family: 'Arial'; }
+.container { width: 50%; margin: 0 auto; padding: 30px 0; }
+
+/* Tabs Navigation */
+.tabs .tabs-navigation {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tabs .tabs-navigation:after { content: "."; display: block; clear: both; height: 0px; overflow: hidden;
+}
+
+.tabs .tabs-navigation li {
+  float: left;
+  padding: 5px 15px;
+  cursor: pointer;
+  background: #eee;
+}
+.tabs .tabs-navigation li:hover {
+  background: #ddd;
+}
+.tabs .tabs-navigation li.active {
+  background: #ccc;
+}
+
+/* Tabs Content */
+.tabs .tabs-content {
+  margin: 0;
+  padding: 2px 30px;
+  border: 1px solid #ddd;
+  list-style: none;
+}
+
+.tabs .tabs-content li {
+  display: block;
+}

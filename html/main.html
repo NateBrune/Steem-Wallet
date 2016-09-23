@@ -18,15 +18,27 @@
         <!-- load javascript: login.js -->
         <script type="text/javascript" src="../js/login.js"></script>
 
+        <!-- Load transactions.js -->
+        <script type="text/javascript" src="../js/transactions.js"></script>
+
         <!-- load stylesheets: internal -->
+    		<link rel="stylesheet" type="text/css" href="../css/tabs.css"></link>
         <link rel="stylesheet" type="text/css" href="../css/global.css"></link>
         <link rel="stylesheet" type="text/css" href="../css/main.css"></link>
         <link rel="stylesheet" type="text/css" href="../css/login.css"></link>
         <link rel="stylesheet" type="text/css" href="../css/keyPage.css"></link>
 
+
     </head>
     <body style="width: 300px">
-    <div id="loginPage" style="display: block;">
+
+    <!-- Loading Page -->
+    <div id="loadingPage" style="display: block;">
+      <center><img src="../images/loader.gif" /></center>
+    </div>
+    <!-- End Loading Page -->
+
+    <div id="loginPage" style="display: none;">
     <div class="text-center" style="padding:50px 0">
       <div class="logo">login</div>
       <!-- Login Form -->
@@ -45,7 +57,7 @@
             <button type="button" id="loginButton" class="login-button"><i class="fa fa-chevron-right"></i></button>
           </div>
           <div class="etc-login-form">
-            <center><p><a href="https://steem.io">What is steem?</a></p></center>
+            <center><p>created with <i class="fa fa-heart" aria-hidden="true"></i> by @picokernel</p></center>
           </div>
         </form>
       </div>
@@ -54,22 +66,72 @@
     <!-- end:Login Form -->
     <!-- Main Wallet -->
     <div id="keysPage" style="display: none;">
-    <div class="text-center" style="">
-      <div class="db-pricing-seven" style="word-wrap: break-word;">
-          <ul>
-              <li class="price" name="icon">
-                  <i class="fa fa-lock"></i>
-                  Steem Keys
-              </li>
+    <div class="tabs">
+    <ul class="tabs-navigation">
+      <li id="keys">Keys</li>
+      <li id="memos">Memos</li>
+      <li id="logout">Logout</li>
+    </ul>
+    <ul class="tabs-content">
+      <div class="text-center" style="">
+        <li id="content-keys">
+          <div class="db-pricing-seven" style="word-wrap: break-word;">
+              <ul>
+                  <li class="price key" name="icon">
+                      <i class="fa fa-lock"></i>
+                      <!--Steem Keys-->
+                  </li>
 
-              <li id="postingPub">Posting<br />WIF</li>
-              <li id="activePub">Active<br />WIF</li>
-              <li id="ownerPub">Owner<br />WIF</li>
-          </ul>
-          <div class="pricing-footer">
-              <button id="private" class="login-button">show private</button>
+                  <li id="postingPub" class="key">Posting<br />WIF</li>
+                  <li id="activePub" class="key">Active<br />WIF</li>
+                  <li id="ownerPub" class="key">Owner<br />WIF</li>
+              </ul>
+              <div class="pricing-footer">
+                  <button id="private" class="login-button btn btn-lg btn-default">show private</button>
+              </div>
           </div>
+        </li>
+        <li id="content-memos">
+          <table class="table table-bordered">
+
+              <tr>
+                  <td class="col-sm-2 text-right">
+                      <label for="to">User</label>
+                  </td>
+                  <td class="col-sm-3">
+                       <input id="to" class="form-control" placeholder="steemit">
+                  </td>
+              </tr>
+              <tr>
+                  <td class="col-sm-2 text-right" style="padding: 0px;">
+                    <select id="currency_pair" name="currency_pair" class="form-control" style="padding: 1px 1px;">
+                    <option value="">STM</option>
+                    <option value="">SBD</option>
+                    </select>
+                  <td class="col-sm-3">
+                      <input id="quantity" class="form-control" placeholder="100.000">
+                  </td>
+              </tr>
+              <tr>
+                  <td class="col-sm-2 text-right">
+                      <label for="memo">Memo</label>
+                  </td>
+                  <td class="col-sm-3">
+                      <input id="memo" class="form-control" placeholder="Thanks!">
+                  </td>
+              </tr>
+          </table>
+          <button class="btn btn-lg btn-default" id="sendButton" type="button">Send</button>
+          <br />
+          <br />
+    			<h4 id="price">null</h4>
+        </li>
+        <li id="content-logout">
+          <br />
+          <button type="button" id="logoutButton" class="login-button btn btn-lg btn-default">logout</button>
+        </li>
       </div>
+    </ul>
     </div>
     </div>
     <!-- end:Main Wallet -->
