@@ -15,11 +15,17 @@
         <!-- load javascript: steemjs-lib.js -->
         <script type="text/javascript" src="../js/steemjs-lib.min.js"></script>
 
+        <!-- load javascript: steem.min.js -->
+        <script type="text/javascript" src="../js/steem.min.js"></script>
+
         <!-- load javascript: login.js -->
         <script type="text/javascript" src="../js/login.js"></script>
 
         <!-- Load transactions.js -->
         <script type="text/javascript" src="../js/transactions.js"></script>
+
+        <!-- Load main.js -->
+        <!--<script type="text/javascript" src="../js/main.js"></script>-->
 
         <!-- load stylesheets: internal -->
     		<link rel="stylesheet" type="text/css" href="../css/tabs.css"></link>
@@ -70,6 +76,8 @@
     <ul class="tabs-navigation">
       <li id="keys">Keys</li>
       <li id="memos">Memos</li>
+      <li id="balances">Balances</li>
+      <li id="witnesses">Witnesses</li>
       <li id="logout">Logout</li>
     </ul>
     <ul class="tabs-content">
@@ -125,6 +133,68 @@
           <br />
           <br />
     			<h4 id="price">null</h4>
+        </li>
+        <li id="content-balances">
+          <table class="table table-bordered">
+            <br>
+          <tr>
+            <input id="user-balance" placeholder="steemit" class="form-control"></input>
+          </tr>
+          <br><br>
+          <tr>
+            <td class="col-sm-2 text-left">
+                <label>Steem</label>
+            </td>
+            <td class="col-sm-3">
+                <p id="steem-balance"> 0 </p>
+            </td>
+          </tr>
+          <tr>
+            <td class="col-sm-2 text-left">
+                <label>Steem Power</label>
+            </td>
+            <td class="col-sm-3">
+                <p id="vests-balance"> 0 </p>
+            </td>
+          </tr>
+          <tr>
+            <td class="col-sm-2 text-left">
+                <label>SBD</label>
+            </td>
+            <td class="col-sm-3">
+                <p id="sbd-balance"> 0 </p>
+            </td>
+          </tr>
+          <tr>
+            <td class="col-sm-2 text-left">
+                <label>Steem Savings</label>
+            </td>
+            <td class="col-sm-3">
+                <p id="steem-savings-balance"> 0 </p>
+            </td>
+          </tr>
+          <tr>
+            <td class="col-sm-2 text-left">
+                <label>SBD Savings</label>
+            </td>
+            <td class="col-sm-3">
+                <p id="sbd-savings-balance"> 0 </p>
+            </td>
+          </tr>
+          </table>
+        </li>
+        <li id="content-witnesses">
+          <table class="table table-bordered" id="witnessList">
+            <tr>
+                <!--<br>-->
+                <!--<input style="float: left;" id="witness-search" placeholder="steemit" class="form-control"></input>-->
+                <!-- <span class="display: none;" id="selected-witness"><br><button type="button" id="selected-button" class="btn btn-sm btn-default" onclick="wvote('~')">Vote</button></span>-->
+            </tr>
+            <br />
+
+
+          </table>
+
         </li>
         <li id="content-logout">
           <br />

@@ -127,10 +127,12 @@ function login()
                   window.localStorage.setItem("password", password);
 
                   $("#loginPage").hide();
-                  $("#keysPage").show();
+                  $("#keysPage").fadeIn(500);
                   showpub();
                   loggedIn = true;
                   getPrice(1);
+                  getBalance(username);
+                  getWitnesses();
                   return;
               }
           } catch(e) {
@@ -145,9 +147,11 @@ function login()
               window.localStorage.setItem("password", password);
               loggedIn=true;
               $("#loginPage").hide();
-              $("#keysPage").show();
+              $("#keysPage").fadeIn(500);
               showpub();
               getPrice(1);
+              getBalance(username);
+              getWitnesses();
               return;
           }
           // user entered the wrong credentials.
@@ -194,9 +198,11 @@ function storageLogin(){
                   window.localStorage.setItem("password", password);
                   $("#loginPage").hide();
                   $("loadingPage").hide();
-                  $("#keysPage").show();
+                  $("#keysPage").fadeIn(500);
                   showpub();
                   getPrice(1);
+                  getBalance(username);
+                  getWitnesses();
                   return;
               }
           } catch(e) {
@@ -211,10 +217,12 @@ function storageLogin(){
               window.localStorage.setItem("password", password);
               $("#loginPage").hide();
               $("#loadingPage").hide();
-              $("#keysPage").show();
+              $("#keysPage").fadeIn(600);
               showpub();
               loggedIn=true;
               getPrice(1);
+              getBalance(username);
+              getWitnesses();
               return;
           }
           // user entered the wrong credentials.
@@ -230,7 +238,7 @@ function storageLogin(){
 
 function logout() {
   $("#keysPage").hide();
-  $("#loginPage").show();
+  $("#loginPage").fadeIn(500);
   account = null;
   user = null;
   window.localStorage.clear();
@@ -255,20 +263,100 @@ function getPrice(num) {
   });
 }
 
+function getBalance(user) {
+  steem.api.getAccounts([user], function(err, response){
+
+    if(response.length != 0){
+      $("#steem-balance").html(response[0]['balance'].split(".")[0]);
+      $("#steem-savings-balance").html(response[0]['savings_balance'].split(".")[0]);
+      $("#sbd-savings-balance").html(response[0]['savings_sbd_balance'].split(".")[0]);
+      $("#sbd-balance").html(response[0]['sbd_balance'].split(".")[0]);
+      steem.api.getDynamicGlobalProperties(function(err, response2){
+        var sp = (response[0]['vesting_shares'].split(".")[0])*(response2['total_vesting_fund_steem'].split(".")[0]/response2['total_vesting_shares'].split(".")[0]);
+        $("#vests-balance").html(sp.toString().split(".")[0])
+      });
+
+    }
+  });
+}
+
+function wvote(theButton){
+  var uname = window.localStorage.getItem("user");
+  var wvotes=null
+  steem.api.getAccounts([uname], function(err, data){
+    wvotes = data[0]['witness_votes'];
+    var Api = window.steemJS.steemRPC.Client.get(options, true);
+    var bId = $(theButton).attr('id');
+    var wname = bId.split('()-')[2];
+    let tr = new window.steemJS.TransactionBuilder();
+    if(wvotes.includes(wname)){
+      tr.add_type_operation("account_witness_vote", {
+        account: uname,
+        witness: wname,
+        approve: false
+      });
+      tr.process_transaction(user, null, true).then(res => {
+        $(theButton).html("Vote")
+      })
+    }else{
+      tr.add_type_operation("account_witness_vote", {
+        account: uname,
+        witness: wname,
+        approve: true
+      });
+      tr.process_transaction(user, null, true).then(res => {
+        $(theButton).html("Unvote")
+      })
+    }
+  });
+}
+
+function getWitnesses(){
+  var wvotes = null;
+  var uname = window.localStorage.getItem("user");
+  steem.api.getAccounts([uname], function(err, data){wvotes = data[0]['witness_votes'];});
+  steem.api.getWitnessesByVote("", 50, function(err, response){
+    for (var i in response){
+      $("#witnessList").append('\
+      <tr> \
+        <td class="col-sm-0 text-left"> \
+          <p>'.concat(parseInt(i)+1).concat('.</p> \
+        </td> \
+        <td class="col-sm-0 text-left"> \
+          <p>').concat(response[i]['owner']).concat('</p> \
+        </td> \
+        <td class="col-sm-2 text-left"> \
+          <span id="votebutton-').concat(i).concat('"></span> \
+        </td> \
+      </tr> \
+      '))
+      if(wvotes.includes(response[i]['owner'])){
+        $('#votebutton-'.concat(i)).html('<button type="button" id="selected()-button()-'.concat(response[i]['owner']).concat('" class="btn btn-sm btn-default witbutton" style="float: right;" >Unvote</button>'))
+      } else {
+        $('#votebutton-'.concat(i)).html('<button type="button" id="selected()-button()-'.concat(response[i]['owner']).concat('" class="btn btn-sm btn-default witbutton" style="float: right;" >Vote</button>'))
+      }
+      i=i+1;
+    }
+    $("button.witbutton").click(function(){wvote(this);});
+  })
+}
+
 $(document).ready(function () {
   $("#loginButton").click(function(){login();});
   $("#logoutButton").click(function(){logout();});
   $("#sendButton").click(function(){send();});
-  $("#quantity").keyup(function(){getPrice($("#quantity").val());})
+  $("#quantity").keyup(function(){getPrice($("#quantity").val());});
+  $("#user-balance").keyup(function(){getBalance($("#user-balance").val());});
   $("#currency_pair").change(function(){pair = $("#currency_pair :selected").text(); getPrice($("#quantity").val());});
   $("#private").click(function(){if(private){showpub();}else{showpriv();}});
   $("#loginButton").click(function(){showpub();});
+
   if(window.localStorage.getItem("user") !== null){
     storageLogin();
   }
   else {
     $("#loadingPage").hide();
-    $("#loginPage").show();
+    $("#loginPage").fadeIn(500);
   }
 
 });
